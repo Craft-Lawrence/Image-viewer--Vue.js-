@@ -1,0 +1,49 @@
+body
+	background: indianred
+	.container
+		background: wheat
+	
+
+.search
+	width: 80%
+
+.result
+	.col
+		display: flex
+		flex-wrap: wrap
+		justify-content: space-around
+		.single__image
+			position: relative
+			margin: 20px
+			width: 25%
+			padding-bottom: 18%
+			background-size: cover
+			background-position: center
+			background-repeat: no-repeat
+			border-radius: 5px
+			overflow: hidden
+			.info
+				position: absolute
+				bottom: 0
+				left: 0
+				right: 0
+				width: 100%
+				padding: 3px 5px
+				background: rgba(0,0,0,.7)
+				color: #fff
+				display: inline-flex
+				justify-content: space-between
+				align-items: center
+				span.date
+					font-size: 12px
+	.empty
+		width: 100%
+		display: flex
+		justify-content: center
+
+.pagination
+	*:focus
+		box-shadow: none !important
+	.btn
+		min-width: 45px
+		text-align: center;

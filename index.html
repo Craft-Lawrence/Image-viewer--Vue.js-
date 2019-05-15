@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+
+	<title>4. Поиск картинок</title>
+	<meta name="description" content="">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<meta property="og:image" content="path/to/image.jpg">
+	<link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-touch-icon-114x114.png">
+
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#000">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#000">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#000">
+	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+	
+	
+	<div id="app">
+		<div class="container p-3">
+			<div class="row mt-3">
+				<div class="col d-flex justify-content-center">
+					<form class="search" @submit.prevent="submit">
+						<div class="form-row d-flex justify-content-center">
+							<div class="col-5">
+								<input 
+									type="text" 
+									class="form-control" 
+									placeholder="Что ищем?"
+									v-model="tempStr"
+									@input="input"
+								>
+							</div>
+							<div class="col-auto">
+								<button type="submit" class="btn btn-primary" @click="">Искать</button>
+							</div>
+
+							<div class="col-auto" v-if="searchStr == ''">
+								<select 
+									class="custom-select" 
+									v-model="order"
+									@change="curPage = 1"
+								>
+									<option value="latest">Последние</option>
+									<option value="oldest">Самые старые</option>
+									<option value="popular">Популярные</option>
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="row mt-3 pagination">
+				<div class="col d-flex justify-content-center">
+					<div class="btn-group mr-2" role="group">
+						<button 
+							type="button" 
+							class="btn btn-info"
+							:disabled="curPage == 1 ? 'disabled' : false "
+							@click="curPage--"
+						>
+							<
+						</button>
+					</div>
+
+					<div class="btn-group mr-2" role="group">
+						<button 
+							type="button" 
+							class="btn"
+							v-for="page in pages"
+							v-text="page"
+							:class="page == curPage ? 'btn-primary' : 'btn-info' "
+							@click="curPage = page"
+							@click="search"
+						></button>
+					</div>
+
+					<div class="btn-group" role="group">
+						<button 
+							type="button" 
+							class="btn btn-info"
+							@click="curPage++"
+						>
+							>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mt-3 result">
+				<div class="col" v-if="images.length > 0">
+					<div 
+						class="single__image"
+						v-for="image in images"
+						:style="'background-image: url('+image.thumb+')'"
+					>
+						<div class="info">
+							<span class="name" v-text="image.username"></span>
+							<span class="date" v-text="beautifyDate(image.date)"></span>
+						</div>
+					</div>
+				</div>
+				<div class="empty" v-else>
+					<span>Ничего не найдено</span>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="js/vue.js"></script>
+	<script src="js/script-dist.js"></script>
+</body>
+</html>
